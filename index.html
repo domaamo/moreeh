@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moreh - مريح | Modern Minimalist Furniture</title>
@@ -162,17 +163,27 @@
             padding: 0;
         }
 
-        /* New Logo Image Styles */
-        .header-logo-img {
-            width: 150px; /* Set the desired width - MODIFIED for bolder appearance */
-            height: auto; /* Maintain aspect ratio */
-            display: block; /* Remove extra space below the image */
-            transition: transform 0.3s ease; /* Add a subtle hover effect */
+        /* Text Logo Styles */
+        .logo-text {
+            display: block !important; /* Override display: none */
+            font-family: 'Aboreto', cursive;
+            font-weight: bold;
+            color: #4d4d3b; /* Dark olive green */
+            font-size: 32px; /* Desktop size */
+            transition: var(--transition);
         }
 
-        .header-logo-img:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
+        .logo-text:hover {
+            color: var(--accent-dark); /* Match existing hover effect */
         }
+
+        /* Dark Mode for Text Logo */
+        body.dark-mode .logo-text {
+            color: var(--text-color); /* Use text-color variable for dark mode */
+        }
+
+        /* Hide the image logo */
+        .header-logo-img { display: none; }
 
         /* Hide the old logo text elements */
         .logo-text {
@@ -1071,6 +1082,10 @@
             .header-logo-img {
                 width: 100px; /* Smaller width for tablets */
             }
+            /* Responsive text logo size for tablets */
+            .logo-text {
+                font-size: 28px;
+            }
 
             nav {
                 position: absolute; /* Absolute positioning for overlay */
@@ -1233,6 +1248,10 @@
             .header-logo-img {
                 width: 80px; /* Even smaller width for mobile phones */
             }
+            /* Responsive text logo size for smallest screens */
+            .logo-text {
+                font-size: 26px;
+            }
 
             nav {
                 margin: 0 15px;
@@ -1379,9 +1398,9 @@
             header.scrolled .header-logo-img {
                 width: 70px; /* Smallest logo for very small screens */
             }
-
-            header.scrolled .mobile-menu-btn {
-                font-size: 20px;
+            /* Responsive text logo size for smallest screens when scrolled */
+            header.scrolled .logo-text {
+                font-size: 22px; /* Adjust as needed for readability */
             }
 
             header.scrolled nav {
@@ -1707,7 +1726,7 @@
     <header>
         <div class="header-container">
             <div class="logo" onclick="window.location.href='#'">
-                <!-- Replaced the logo-text div with the new logo image -->
+                <div class="logo-text">MOREH</div>
                 <img src="images/headerlogo.png" alt="Moreh Logo" class="header-logo-img">
             </div>
             
@@ -2088,7 +2107,7 @@
         <div class="footer-container">
             <div class="footer-about" data-aos="fade-up" data-aos-duration="700"> <!-- Changed from fade-right -->
                 <div class="footer-logo">
-                    <!-- Copied Header Logo -->
+                    <div class="logo-text">MOREH</div>
                     <img src="images/headerlogo.png" alt="Moreh Logo" class="header-logo-img">
                 </div>
                 <p id="footer-about-text">Modern minimalist furniture combining sleek design with exceptional functionality for discerning homeowners.</p>
