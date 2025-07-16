@@ -765,10 +765,12 @@
             justify-content: center;
         }
 
-        .modal-image img {
+        .carousel-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease-in-out; /* Add transition for opacity */
         }
 
         .modal-content {
@@ -926,13 +928,6 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-        }
-
-        .carousel-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
         }
 
         .carousel-button {
@@ -2861,8 +2856,15 @@
             const images = imagesString.split(',').map(img => img.trim());
 
             if (imageIndex >= 0 && imageIndex < images.length) {
-                carouselImage.src = images[imageIndex];
-                currentImageIndexes[modalId] = imageIndex;
+                // Start fade-out
+                carouselImage.style.opacity = '0';
+
+                // After a short delay, change the image source and fade in
+                setTimeout(() => {
+                    carouselImage.src = images[imageIndex];
+                    currentImageIndexes[modalId] = imageIndex;
+                    carouselImage.style.opacity = '1'; // Fade in the new image
+                }, 300); // This delay should match the CSS transition duration
             }
         }
 
