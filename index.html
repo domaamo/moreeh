@@ -2731,10 +2731,6 @@
                 document.body.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
             }
 
-            // Update Header Logo (no longer text, but keeping the IDs for potential future use or if text is re-introduced)
-            // document.getElementById('header-logo-english').textContent = currentTranslations['header-logo-english'];
-            // document.getElementById('header-logo-arabic').textContent = currentTranslations['header-logo-arabic'];
-
             // Update Header Navigation
             document.querySelector('nav ul li a[data-en="Home"]').textContent = currentTranslations['nav-home'];
             document.querySelector('nav ul li a[data-en="Products"]').textContent = currentTranslations['nav-products'];
@@ -2856,15 +2852,23 @@
             const images = imagesString.split(',').map(img => img.trim());
 
             if (imageIndex >= 0 && imageIndex < images.length) {
+                const newImageUrl = images[imageIndex];
+
                 // Start fade-out
                 carouselImage.style.opacity = '0';
 
-                // After a short delay, change the image source and fade in
-                setTimeout(() => {
-                    carouselImage.src = images[imageIndex];
+                // Preload the new image
+                const img = new Image();
+                img.onload = () => {
+                    // Once the new image is loaded, update the carousel image src
+                    carouselImage.src = newImageUrl;
                     currentImageIndexes[modalId] = imageIndex;
-                    carouselImage.style.opacity = '1'; // Fade in the new image
-                }, 300); // This delay should match the CSS transition duration
+                    // Fade in the new image after a short delay to ensure the src change is registered
+                    setTimeout(() => {
+                        carouselImage.style.opacity = '1';
+                    }, 50); // Small delay to ensure CSS transition applies
+                };
+                img.src = newImageUrl; // Start loading the image
             }
         }
 
