@@ -758,17 +758,112 @@
         }
 
         .modal-image {
-            height: 100%;
+            width: 100%;
+            max-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative; /* Added for carousel positioning */
+        }
+
+        /* NEW CAROUSEL STYLES */
+        .carousel-container {
             position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Ensures slides are clipped */
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out; /* Smooth sliding transition */
+        }
+
+        .carousel-slide {
+            flex-shrink: 0; /* Prevents slides from shrinking */
+            width: 100%; /* Each slide takes full width */
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .modal-image img {
+        .carousel-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Ensures image fits without cropping */
+            display: block;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 5;
+            transition: background-color 0.3s ease;
+            border-radius: 5px; /* Added for consistency */
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-button.prev {
+            left: 0;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0; /* Ensure only right side is rounded */
+            border-bottom-left-radius: 0;
+        }
+
+        .carousel-button.next {
+            right: 0;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border-top-right-radius: 0; /* Ensure only left side is rounded */
+            border-bottom-right-radius: 0;
+        }
+
+        .carousel-pagination {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .pagination-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        /* END NEW CAROUSEL STYLES */
+
+        .modal-image img {
+            /* Original styles, now mostly overridden by .carousel-image */
+            /* width: 100%; */
+            /* max-width: 100%; */
+            /* max-height: 100%; */
+            /* object-fit: contain; */
+            /* display: block; */
         }
 
         .modal-content {
@@ -918,51 +1013,6 @@
 
         .quick-view-btn:hover {
             background-color: var(--accent-light);
-        }
-
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .carousel-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 20px;
-            z-index: 5;
-            transition: background-color 0.3s ease;
-        }
-
-        .carousel-button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        .carousel-button.prev {
-            left: 0;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
-
-        .carousel-button.next {
-            right: 0;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
         }
 
         /* Animations */
@@ -1292,7 +1342,7 @@
             }
             
             .modal-image {
-                height: 90%; /* Smaller image height on very small screens */
+                max-height: 65vh; /* Smaller image height on very small screens */
             }
             
             .modal-content {
@@ -1338,7 +1388,7 @@
             }
 
             .modal-close {
-                font-size: 40px;
+                font-size: 50px;
                 top: 10px;
                 right: 10px;
                 color: #333;
@@ -1503,21 +1553,21 @@
         body.rtl .carousel-button.prev {
             left: auto;
             right: 0;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            transform: translateY(-50%) rotate(180deg); /* Flip arrow and position */
+            border-top-right-radius: 5px; /* Adjusted for RTL */
+            border-bottom-right-radius: 5px; /* Adjusted for RTL */
+            border-top-left-radius: 0; 
+            border-bottom-left-radius: 0;
+            transform: translateY(-50%) rotate(0deg); /* No rotation needed if arrows are correct */
         }
 
         body.rtl .carousel-button.next {
             right: auto;
             left: 0;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            transform: translateY(-50%) rotate(180deg); /* Flip arrow and position */
+            border-top-left-radius: 5px; /* Adjusted for RTL */
+            border-bottom-left-radius: 5px; /* Adjusted for RTL */
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            transform: translateY(-50%) rotate(0deg); /* No rotation needed if arrows are correct */
         }
 
         /* Mobile RTL adjustments */
@@ -2171,11 +2221,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="sofra/1.jpg" alt="Full view of minimalist sectional sofa" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product1')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product1')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">نيش وسفره مودرن</h2>
@@ -2207,11 +2253,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="panda/1.jpg" alt="Modern Dining Set with natural wood table" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product2')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product2')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">انتريه باندا</h2>
@@ -2244,11 +2286,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="sofra2/1.jpg" alt="Minimalist Extendable Dining Table" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product3')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product3')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">سفره كلاسيكي</h2>
@@ -2282,11 +2320,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="rokna/1.jpg" alt="Platform Bed with Integrated Headboard" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product4')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product4')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">ركنه مودرن</h2>
@@ -2321,11 +2355,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="sofra3/1.jpg" alt="Modular Open Bookshelf" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product5')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product5')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">سفره مودرن فاخره مع نيش فضيه</h2>
@@ -2355,11 +2385,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/333333?text=Accent+Armchair+1" alt="Accent Armchair in navy blue" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product6')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product6')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">Accent Armchair</h2>
@@ -2390,11 +2416,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/333333?text=Geometric+Table+1" alt="Geometric Coffee Table with glass top" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product7')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product7')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">Geometric Coffee Table</h2>
@@ -2425,11 +2447,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/333333?text=Arc+Lamp+1" alt="Minimalist Arc Floor Lamp" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product8')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product8')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">Minimalist Arc Floor Lamp</h2>
@@ -2460,11 +2478,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/333333?text=Task+Chair+1" alt="Ergonomic Task Chair" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product9')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product9')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">Ergonomic Task Chair</h2>
@@ -2495,11 +2509,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/333333?text=Console+Table+1" alt="Slim Entryway Console" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product10')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product10')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">Slim Entryway Console</h2>
@@ -2530,11 +2540,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/333333?text=Outdoor+Lounge+1" alt="Outdoor Lounge Set" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product11')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product11')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">Outdoor Lounge Set</h2>
@@ -2565,11 +2571,7 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-image">
-                <div class="carousel-container">
-                    <img src="https://via.placeholder.com/600x400/F5F5F5/333333?text=Sliding+Wardrobe+1" alt="Minimalist Sliding Door Wardrobe" class="carousel-image" />
-                    <button class="carousel-button prev" onclick="prevImage('product12')">❮</button>
-                    <button class="carousel-button next" onclick="nextImage('product12')">❯</button>
-                </div>
+                <!-- Carousel content will be dynamically generated here -->
             </div>
             <div class="modal-content">
                 <h2 class="modal-title">Minimalist Sliding Door Wardrobe</h2>
@@ -2599,6 +2601,7 @@
     <script>
         // Global object to store current image index for each modal
         const currentImageIndexes = {};
+        const sliderStates = {}; // To store current index and total slides for each modal
 
         // Translations object
         const translations = {
@@ -2763,6 +2766,7 @@
             document.getElementById('about-heading').textContent = currentTranslations['about-heading'];
             document.getElementById('about-paragraph1').textContent = currentTranslations['about-paragraph1'];
             document.getElementById('about-paragraph2').textContent = currentTranslations['about-paragraph2'];
+            document.getElementById('about-paragraph2').textContent = currentTranslations['about-paragraph2'];
             document.getElementById('about-paragraph3').textContent = currentTranslations['about-paragraph3'];
             document.getElementById('about-paragraph4').textContent = currentTranslations['about-paragraph4'];
 
@@ -2805,10 +2809,72 @@
             const imagesString = productCard.dataset.images;
             const images = imagesString.split(',').map(img => img.trim());
 
-            const carouselImage = modalOverlay.querySelector('.carousel-image');
-            carouselImage.src = images[0]; // Set initial image
-            carouselImage.dataset.images = imagesString; // Store all images on the carousel image element
-            currentImageIndexes[productId] = 0; // Initialize current image index
+            const modalImageContainer = modalOverlay.querySelector('.modal-image');
+            modalImageContainer.innerHTML = ''; // Clear previous content
+
+            // Create carousel structure
+            const carouselContainer = document.createElement('div');
+            carouselContainer.className = 'carousel-container';
+
+            const carouselTrack = document.createElement('div');
+            carouselTrack.className = 'carousel-track';
+            carouselTrack.id = `${productId}-carousel-track`; // Unique ID for track
+
+            images.forEach((src, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                const img = document.createElement('img');
+                img.className = 'carousel-image';
+                img.alt = `Product image ${index + 1}`;
+                img.setAttribute('data-src', src); // Use data-src for lazy loading
+                slide.appendChild(img);
+                carouselTrack.appendChild(slide);
+            });
+
+            const prevButton = document.createElement('button');
+            prevButton.className = 'carousel-button prev';
+            prevButton.innerHTML = '&#10094;'; // Left arrow
+            prevButton.onclick = () => prevSlide(productId);
+
+            const nextButton = document.createElement('button');
+            nextButton.className = 'carousel-button next';
+            nextButton.innerHTML = '&#10095;'; // Right arrow
+            nextButton.onclick = () => nextSlide(productId);
+
+            const paginationDots = document.createElement('div');
+            paginationDots.className = 'carousel-pagination';
+            paginationDots.id = `${productId}-carousel-pagination`; // Unique ID for pagination
+
+            images.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = 'pagination-dot';
+                dot.onclick = () => showSlide(productId, index);
+                paginationDots.appendChild(dot);
+            });
+
+            carouselContainer.appendChild(carouselTrack);
+            carouselContainer.appendChild(prevButton);
+            carouselContainer.appendChild(nextButton);
+            carouselContainer.appendChild(paginationDots);
+            modalImageContainer.appendChild(carouselContainer);
+
+            // Initialize slider state
+            sliderStates[productId] = {
+                currentIndex: 0,
+                totalSlides: images.length,
+                track: carouselTrack,
+                pagination: paginationDots,
+                startX: 0,
+                currentX: 0,
+                isDragging: false
+            };
+
+            // Add touch event listeners for swiping
+            carouselContainer.addEventListener('touchstart', (e) => handleTouchStart(e, productId));
+            carouselContainer.addEventListener('touchmove', (e) => handleTouchMove(e, productId));
+            carouselContainer.addEventListener('touchend', (e) => handleTouchEnd(e, productId));
+
+            showSlide(productId, 0); // Show the first slide and load its image
 
             // Get the primary button within the modal
             const primaryButton = modalOverlay.querySelector('.modal-btn.primary');
@@ -2854,42 +2920,99 @@
         });
 
         // Carousel Functions
-        function showImage(modalId, imageIndex) {
-            const modalOverlay = document.getElementById(modalId + '-modal');
-            const carouselImage = modalOverlay.querySelector('.carousel-image');
-            const imagesString = carouselImage.dataset.images;
-            const images = imagesString.split(',').map(img => img.trim());
+        function showSlide(productId, index) {
+            const state = sliderStates[productId];
+            if (!state) return;
 
-            if (imageIndex >= 0 && imageIndex < images.length) {
-                carouselImage.src = images[imageIndex];
-                currentImageIndexes[modalId] = imageIndex;
+            // Ensure index wraps around
+            if (index >= state.totalSlides) {
+                index = 0;
+            } else if (index < 0) {
+                index = state.totalSlides - 1;
+            }
+            state.currentIndex = index;
+
+            const offset = -index * 100;
+            state.track.style.transform = `translateX(${offset}%)`;
+
+            // Update pagination dots
+            Array.from(state.pagination.children).forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            // Lazy load images: load current, previous, and next images
+            const slides = state.track.children;
+            for (let i = 0; i < slides.length; i++) {
+                const img = slides[i].querySelector('.carousel-image');
+                if (img && img.dataset.src) {
+                    if (i === index || i === index - 1 || i === index + 1 || 
+                        (index === 0 && i === state.totalSlides - 1) || // For first slide, load last
+                        (index === state.totalSlides - 1 && i === 0)) { // For last slide, load first
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src'); // Remove data-src once loaded
+                    }
+                }
             }
         }
 
-        function nextImage(modalId) {
-            const modalOverlay = document.getElementById(modalId + '-modal');
-            const carouselImage = modalOverlay.querySelector('.carousel-image');
-            const imagesString = carouselImage.dataset.images;
-            const images = imagesString.split(',').map(img => img.trim());
-            
-            let newIndex = currentImageIndexes[modalId] + 1;
-            if (newIndex >= images.length) {
-                newIndex = 0; // Loop back to the first image
+        function nextSlide(productId) {
+            const state = sliderStates[productId];
+            if (state) {
+                showSlide(productId, state.currentIndex + 1);
             }
-            showImage(modalId, newIndex);
         }
 
-        function prevImage(modalId) {
-            const modalOverlay = document.getElementById(modalId + '-modal');
-            const carouselImage = modalOverlay.querySelector('.carousel-image');
-            const imagesString = carouselImage.dataset.images;
-            const images = imagesString.split(',').map(img => img.trim());
-
-            let newIndex = currentImageIndexes[modalId] - 1;
-            if (newIndex < 0) {
-                newIndex = images.length - 1; // Loop back to the last image
+        function prevSlide(productId) {
+            const state = sliderStates[productId];
+            if (state) {
+                showSlide(productId, state.currentIndex - 1);
             }
-            showImage(modalId, newIndex);
+        }
+
+        // Touch/Swipe Logic
+        function handleTouchStart(e, productId) {
+            const state = sliderStates[productId];
+            if (!state) return;
+
+            state.isDragging = true;
+            state.startX = e.touches[0].clientX;
+            state.currentX = state.track.getBoundingClientRect().left; // Get current position of the track
+            state.track.style.transition = 'none'; // Disable transition during drag
+        }
+
+        function handleTouchMove(e, productId) {
+            const state = sliderStates[productId];
+            if (!state || !state.isDragging) return;
+
+            const diffX = e.touches[0].clientX - state.startX;
+            const newTransform = state.currentX + diffX;
+            state.track.style.transform = `translateX(${newTransform}px)`;
+        }
+
+        function handleTouchEnd(e, productId) {
+            const state = sliderStates[productId];
+            if (!state || !state.isDragging) return;
+
+            state.isDragging = false;
+            state.track.style.transition = 'transform 0.5s ease-in-out'; // Re-enable transition
+
+            const endX = e.changedTouches[0].clientX;
+            const swipeThreshold = 50; // Minimum pixels for a swipe
+
+            if (endX < state.startX - swipeThreshold) {
+                // Swiped left
+                nextSlide(productId);
+            } else if (endX > state.startX + swipeThreshold) {
+                // Swiped right
+                prevSlide(productId);
+            } else {
+                // Not a significant swipe, snap back to current slide
+                showSlide(productId, state.currentIndex);
+            }
         }
         
         // Smooth scrolling for navigation links
@@ -2909,26 +3032,6 @@
                 }
             });
         });
-        
-        // Animate elements when visible (Removed as AOS handles this)
-        /*
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.section-title h2, .product-card, .about-text');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementPosition < windowHeight - 100) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        }
-        
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll(); // Initial check
-        */
         
         // Mobile Menu
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
