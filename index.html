@@ -403,8 +403,9 @@
 
         /* Products Grid */
         .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            display: flex; /* Changed from grid to flex */
+            flex-wrap: wrap; /* Added flex-wrap */
+            justify-content: center; /* Center items in the grid */
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
@@ -417,6 +418,8 @@
             box-shadow: var(--shadow);
             transition: var(--transition), background-color 0.5s ease;
             font-family: 'Cairo';
+            width: calc((100% / 3) - 20px); /* Approximate width for 3 columns with gap */
+            min-width: 280px; /* Ensure min-width is maintained */
             /* opacity: 0; */ /* Removed as AOS will handle initial opacity */
             /* animation: fadeIn 1s ease forwards; */ /* Removed as AOS will handle animation */
             /* animation-delay: calc(var(--order) * 0.1s); */ /* Removed as AOS will handle delay */
@@ -1137,6 +1140,10 @@
             .about-text p {
                 font-size: 16px;
             }
+
+            .product-card {
+                width: calc(50% - 15px); /* Two columns on tablets */
+            }
         }
 
         @media (max-width: 768px) {
@@ -1246,7 +1253,7 @@
             }
             
             .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                /* grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); */
                 gap: 20px;
             }
             
@@ -1340,9 +1347,13 @@
             }
             
             .products-grid {
-                grid-template-columns: 1fr; /* Stack products vertically */
+                /* grid-template-columns: 1fr; */ /* Stack products vertically */
                 gap: 20px;
                 padding: 0 15px; /* Add horizontal padding */
+            }
+
+            .product-card {
+                width: 100%; /* Full width on mobile */
             }
             
             .modal {
@@ -1786,6 +1797,37 @@
                 padding: 12px 15px;
             }
         }
+
+        /* Styles for Show More/Less buttons */
+        .product-card.hidden {
+            display: none;
+        }
+
+        .product-actions {
+            text-align: center;
+            margin-top: 40px;
+
+        }
+
+        .product-action-btn {
+            background-color: var(--accent-dark);
+            color: white;
+            padding: 8px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0 10px;
+            font-family: 'cairo';
+        }
+
+        .product-action-btn:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -1835,7 +1877,7 @@
         
         <div class="products-grid">
             <!-- Product 1: Minimalist Sectional Sofa -->
-            <div class="product-card" style="--order: 1;" onclick="openModal('product1')"
+            <div class="product-card" style="order: 3;" onclick="openModal('product1')"
                  data-images="sofra/1.jpg, sofra/2.jpg, sofra/3.jpg, sofra/4.jpg, sofra/5.jpg, sofra/6.jpg, sofra/7.jpg, sofra/8.jpg"
                  data-aos="fade-up" data-aos-delay="100" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1854,7 +1896,7 @@
             </div>
             
             <!-- Product 2: Modern Dining Set -->
-            <div class="product-card" style="--order: 2;" onclick="openModal('product2')"
+            <div class="product-card" style="order: 2;" onclick="openModal('product2')"
                  data-images="panda/1.jpg, panda/2.jpg, panda/3.jpg, panda/4.jpg, panda/5.jpg"
                  data-aos="fade-up" data-aos-delay="200" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1873,7 +1915,7 @@
             </div>
             
             <!-- Product 3: Minimalist Extendable Dining Table -->
-            <div class="product-card" style="--order: 3;" onclick="openModal('product3')"
+            <div class="product-card" style="order: 4;" onclick="openModal('product3')"
                  data-images="sofra2/1.jpg, sofra2/2.jpg, sofra2/3.jpg, sofra2/4.jpg, sofra2/5.jpg, sofra2/6.jpg, sofra2/7.jpg"
                  data-aos="fade-up" data-aos-delay="300" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1892,7 +1934,7 @@
             </div>
             
             <!-- Product 4: Platform Bed with Integrated Headboard -->
-            <div class="product-card" style="--order: 4;" onclick="openModal('product4')"
+            <div class="product-card" style="order: 1;" onclick="openModal('product4')"
                  data-images="rokna/1.jpg, rokna/2.jpg, rokna/3.jpg, rokna/4.jpg, rokna/5.jpg, rokna/6.jpg"
                  data-aos="fade-up" data-aos-delay="400" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1911,7 +1953,7 @@
             </div>
             
             <!-- Product 5: Modular Open Bookshelf -->
-            <div class="product-card" style="--order: 5;" onclick="openModal('product5')"
+            <div class="product-card" style="order: 5;" onclick="openModal('product5')"
                  data-images="sofra3/1.jpg, sofra3/2.jpg, sofra3/3.jpg, sofra3/4.jpg, sofra3/5.jpg, sofra3/6.jpg, sofra3/7.jpg, sofra3/8.jpg"
                  data-aos="fade-up" data-aos-delay="500" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1930,7 +1972,7 @@
             </div>
             
             <!-- Product 6: Accent Armchair -->
-            <div class="product-card" style="--order: 6;" onclick="openModal('product6')"
+            <div class="product-card" style="order: 6;" onclick="openModal('product6')"
                  data-images="https://via.placeholder.com/600x400/F5F5F5/333333?text=Accent+Armchair+1, https://via.placeholder.com/600x400/F5F5F5/333333?text=Accent+Armchair+2, https://via.placeholder.com/600x400/F5F5F5/333333?text=Accent+Armchair+3"
                  data-aos="fade-up" data-aos-delay="600" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1949,7 +1991,7 @@
             </div>
 
             <!-- Product 7: Geometric Coffee Table -->
-            <div class="product-card" style="--order: 7;" onclick="openModal('product7')"
+            <div class="product-card" style="order: 7;" onclick="openModal('product7')"
                  data-images="https://via.placeholder.com/600x400/F5F5F5/333333?text=Geometric+Table+1, https://via.placeholder.com/600x400/F5F5F5/333333?text=Geometric+Table+2, https://via.placeholder.com/600x400/F5F5F5/333333?text=Geometric+Table+3"
                  data-aos="fade-up" data-aos-delay="100" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1968,7 +2010,7 @@
             </div>
 
             <!-- Product 8: Minimalist Arc Floor Lamp -->
-            <div class="product-card" style="--order: 8;" onclick="openModal('product8')"
+            <div class="product-card" style="order: 8;" onclick="openModal('product8')"
                  data-images="https://via.placeholder.com/600x400/F5F5F5/333333?text=Arc+Lamp+1, https://via.placeholder.com/600x400/F5F5F5/333333?text=Arc+Lamp+2, https://via.placeholder.com/600x400/F5F5F5/333333?text=Arc+Lamp+3"
                  data-aos="fade-up" data-aos-delay="200" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -1987,7 +2029,7 @@
             </div>
 
             <!-- Product 9: Ergonomic Task Chair -->
-            <div class="product-card" style="--order: 9;" onclick="openModal('product9')"
+            <div class="product-card" style="order: 9;" onclick="openModal('product9')"
                  data-images="https://via.placeholder.com/600x400/F5F5F5/333333?text=Task+Chair+1, https://via.placeholder.com/600x400/F5F5F5/333333?text=Task+Chair+2, https://via.placeholder.com/600x400/F5F5F5/333333?text=Task+Chair+3"
                  data-aos="fade-up" data-aos-delay="300" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -2006,7 +2048,7 @@
             </div>
 
             <!-- Product 10: Slim Entryway Console -->
-            <div class="product-card" style="--order: 10;" onclick="openModal('product10')"
+            <div class="product-card" style="order: 10;" onclick="openModal('product10')"
                  data-images="https://via.placeholder.com/600x400/F5F5F5/333333?text=Console+Table+1, https://via.placeholder.com/600x400/F5F5F5/333333?text=Console+Table+2, https://via.placeholder.com/600x400/F5F5F5/333333?text=Console+Table+3"
                  data-aos="fade-up" data-aos-delay="400" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -2025,7 +2067,7 @@
             </div>
 
             <!-- Product 11: Outdoor Lounge Set -->
-            <div class="product-card" style="--order: 11;" onclick="openModal('product11')"
+            <div class="product-card" style="order: 11;" onclick="openModal('product11')"
                  data-images="https://via.placeholder.com/600x400/F5F5F5/333333?text=Outdoor+Lounge+1, https://via.placeholder.com/600x400/F5F5F5/333333?text=Outdoor+Lounge+2, https://via.placeholder.com/600x400/F5F5F5/333333?text=Outdoor+Lounge+3"
                  data-aos="fade-up" data-aos-delay="500" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -2044,7 +2086,7 @@
             </div>
 
             <!-- Product 12: Minimalist Sliding Door Wardrobe -->
-            <div class="product-card" style="--order: 12;" onclick="openModal('product12')"
+            <div class="product-card" style="order: 12;" onclick="openModal('product12')"
                  data-images="https://via.placeholder.com/600x400/F5F5F5/333333?text=Sliding+Wardrobe+1, https://via.placeholder.com/600x400/F5F5F5/333333?text=Sliding+Wardrobe+2, https://via.placeholder.com/600x400/F5F5F5/333333?text=Sliding+Wardrobe+3"
                  data-aos="fade-up" data-aos-delay="600" data-aos-duration="600"> <!-- Changed from fade-left/right -->
                 <div class="product-image">
@@ -2061,6 +2103,11 @@
                     <a href="#" class="product-btn">عرض التفاصيل</a>
                 </div>
             </div>
+        </div>
+
+        <div class="product-actions">
+            <button id="show-more-btn" class="product-action-btn" data-aos="fade-up" data-aos-duration="700">عرض المزيد</button>
+            <button id="show-less-btn" class="product-action-btn" style="display: none;">عرض أقل</button>
         </div>
     </section>
     
@@ -3273,8 +3320,12 @@
             });
 
             // Load preferences on page load
-            const savedLang = localStorage.getItem('morehLang') || 'en';
-            changeLanguage(savedLang);
+            const savedLang = localStorage.getItem('morehLang');
+            if (savedLang) {
+                changeLanguage(savedLang);
+            } else {
+                changeLanguage('en'); // Default to English if no preference is saved
+            }
 
             const savedDarkMode = localStorage.getItem('morehDarkMode');
             if (savedDarkMode === 'true') {
@@ -3320,6 +3371,53 @@
 
             // Add scroll event listener
             window.addEventListener('scroll', handleScroll);
+
+            // Show More/Less Products Logic
+            const productCards = document.querySelectorAll('.products-grid .product-card');
+            const showMoreBtn = document.getElementById('show-more-btn');
+            const showLessBtn = document.getElementById('show-less-btn');
+            const productsToShowInitially = 6;
+            const productsToLoadPerClick = 6;
+            let currentlyVisibleProducts = productsToShowInitially;
+
+            function updateProductVisibility() {
+                productCards.forEach((card, index) => {
+                    if (index < currentlyVisibleProducts) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                // Update button visibility
+                if (currentlyVisibleProducts >= productCards.length) {
+                    showMoreBtn.style.display = 'none';
+                } else {
+                    showMoreBtn.style.display = 'inline-block';
+                }
+
+                if (currentlyVisibleProducts > productsToShowInitially) {
+                    showLessBtn.style.display = 'inline-block';
+                } else {
+                    showLessBtn.style.display = 'none';
+                }
+                AOS.refresh(); // Refresh AOS to animate newly visible elements
+            }
+
+            showMoreBtn.addEventListener('click', () => {
+                currentlyVisibleProducts += productsToLoadPerClick;
+                updateProductVisibility();
+            });
+
+            showLessBtn.addEventListener('click', () => {
+                currentlyVisibleProducts = productsToShowInitially;
+                updateProductVisibility();
+                // Scroll back to the top of the products section
+                document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+
+            // Initial call to set up product visibility
+            updateProductVisibility();
         });
 
         // NEW CODE FOR PROTECTION STARTS HERE
